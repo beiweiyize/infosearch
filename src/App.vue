@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="box">
+      <div class="middle_box">
+        <div class="input_box">
+          <input class="input" type="text" placeholder="请输入搜索的文献名称">
+          <button class="button">搜索</button>
+        </div>
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
-
+export default {
+}
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -15,18 +19,55 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  /* background-image: url("../assets/background.png"); */
 }
 
-#nav {
+/* #nav {
   padding: 30px;
 }
+.middle_box{
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+} */
+.box {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items:center;
+  height: 1000px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("D:/InformationSearch/infosearch/src/assets/background.jpg");
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.middle_box{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items:center;
+  width:60%;
+  height:10%;
+}
+
+.input_box{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items:center;
+  width:80%;
+  height:80%;
+}
+.input{
+  width:70%;
+  height:60%;
+  border-radius: 20px;
+  font-size:25px;
+  text-align: center;
+}
+.button{
+  width:18%;
+  height:60%;
+  border-radius: 20px;
+  font-size:25px;
 }
 </style>
