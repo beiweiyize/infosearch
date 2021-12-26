@@ -309,19 +309,19 @@ export default {
       if (this.graph != null) {
         this.graph.destroy()
       }
+      console.log(row.Sid)
       var obj = {}
       obj.value = row.Sid
       obj = JSON.stringify(obj)
       this.$axios({
         method: 'post',
-        url: 'http://10.108.14.126:8000/draw/',
+        url: '/draw/',
         data: obj,
         headers: {
           'content-type': 'application/json'
         }
       }).then(res => {
         this.Nodelist = res.data
-        console.log(this.Nodelist)
         this.Graph()
       }).catch(err => {
         console.log(err)
@@ -362,7 +362,7 @@ export default {
 .minimap{
     position: absolute;
     right: 0;
-    top: 50px;
+    top: 80px;
     background-color: #fff
 }
 </style>

@@ -2,6 +2,7 @@
   <div id="app">
     <div class="box">
       <div class="middle_box">
+        <button class="buttonconvert" @click = "convert" v-show="isshow">切换</button>
         <div class="input_box">
           <input class="input" type="text" placeholder="请输入搜索的文献名称" v-model="value">
           <button class="button" @click = "commit">搜索</button>
@@ -17,17 +18,34 @@ export default {
   data () {
     return {
       reslist: [],
-      value: ''
+      value: '',
+      isshow: false,
+      convertvalue: true,
+      data: [],
+      sorted_data: []
     }
   },
+  mounted () {
+    this.isshow = false
+  },
   methods: {
+    convert () {
+      if (this.convertvalue) {
+        this.reslist = this.sorted_data
+        this.$router.push({ path: '/about', query: { data: this.reslist } })
+      } else {
+        this.reslist = this.data
+        this.$router.push({ path: '/about', query: { data: this.reslist } })
+      }
+      this.convertvalue = !this.convertvalue
+    },
     commit () {
       var obj = {}
       obj.value = this.value
       obj = JSON.stringify(obj)
       this.$axios({
         method: 'post',
-        url: 'http://10.108.14.126:8000/search/',
+        url: '/api/',
         data: obj,
         headers: {
           'content-type': 'application/json'
@@ -36,11 +54,13 @@ export default {
         if (res.data.status === 201) {
           alert('未查找到相关的文献内容，请检查后重新输入')
         } else {
-          console.log(res.data)
-          this.reslist = res.data.data
+          this.data = res.data.data
+          this.sorted_data = res.data.sorted_data
+          this.reslist = this.data
+          console.log(this.reslist)
           this.$router.push({ path: '/about', query: { data: this.reslist } })
+          this.isshow = true
         }
-        this.value = ''
       }).catch(err => {
         console.log(err)
       })
@@ -78,10 +98,10 @@ export default {
 
 .middle_box{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: row;
   align-items:center;
-  width:60%;
+  width:90%;
   height:10%;
 }
 
@@ -101,8 +121,14 @@ export default {
   text-align: center;
 }
 .button{
-  width:18%;
+  width:8%;
   height:60%;
+  border-radius: 20px;
+  font-size:25px;
+}
+.buttonconvert{
+  width:8%;
+  height:50%;
   border-radius: 20px;
   font-size:25px;
 }
